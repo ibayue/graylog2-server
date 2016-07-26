@@ -27,12 +27,6 @@ const AuthenticationComponent = React.createClass({
 
   mixins: [Reflux.connect(AuthenticationStore), Reflux.connect(CurrentUserStore), PermissionsMixin],
 
-  getInitialState() {
-    return {
-      activeTab: 'users',
-    };
-  },
-
   componentDidMount() {
     this.style.use();
     AuthenticationActions.load();
@@ -69,10 +63,6 @@ const AuthenticationComponent = React.createClass({
     return AuthenticationActions.update('providers', config);
   },
 
-  _handleTabChange(key) {
-    this.setState({ activeTab: key });
-  },
-
   _contentComponent() {
     if (!this.state.authenticators) {
       return <Spinner />;
@@ -94,16 +84,16 @@ const AuthenticationComponent = React.createClass({
         const title = (auth || { displayName: name }).displayName;
         const numberedTitle = `${idx + 1}. ${title}`;
         return (<LinkContainer key={`container-${name}`} to={Routes.SYSTEM.AUTHENTICATION.PROVIDERS.provider(name)}>
-          <NavItem key={name} eventKey={name} title={numberedTitle}>{numberedTitle}</NavItem>
+          <NavItem key={name} title={numberedTitle}>{numberedTitle}</NavItem>
         </LinkContainer>);
       });
 
       authenticators.unshift(
-        <NavItem key="divider" disabled title="Provider Settings" className="divider">Provider Settings</NavItem>
+        <NavItem key="provider-settings" disabled title="Provider Settings" className={style.divider}>Provider Settings</NavItem>
       );
       authenticators.unshift(
         <LinkContainer key="container-settings" to={Routes.SYSTEM.AUTHENTICATION.PROVIDERS.CONFIG}>
-          <NavItem key="settings" eventKey="config" title="Configure Provider Order">Configure Provider Order</NavItem>
+          <NavItem key="settings" title="Configure Provider Order">Configure Provider Order</NavItem>
         </LinkContainer>
       );
     }
@@ -112,19 +102,19 @@ const AuthenticationComponent = React.createClass({
     if (this.isPermitted(this.state.currentUser.permissions, ['roles:read'])) {
       authenticators.unshift(
         <LinkContainer key="roles" to={Routes.SYSTEM.AUTHENTICATION.ROLES}>
-          <NavItem eventKey="roles" title="Roles">Roles</NavItem>
+          <NavItem title="Roles">Roles</NavItem>
         </LinkContainer>
       );
     }
     if (this.isPermitted(this.state.currentUser.permissions, ['roles:read'])) {
       authenticators.unshift(
         <LinkContainer key="users" to={Routes.SYSTEM.AUTHENTICATION.USERS.LIST}>
-          <NavItem eventKey="users" title="Users">Users</NavItem>
+          <NavItem title="Users">Users</NavItem>
         </LinkContainer>
       );
     }
     const subnavigation = (
-      <Nav activeKey={this.state.activeTab} onSelect={this._handleTabChange} stacked bsStyle="pills">
+      <Nav stacked bsStyle="pills">
         {authenticators}
       </Nav>
     );
