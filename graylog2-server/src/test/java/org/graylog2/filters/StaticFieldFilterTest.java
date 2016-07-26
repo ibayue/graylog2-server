@@ -65,10 +65,6 @@ public class StaticFieldFilterTest {
         Message msg = new Message("hello", "junit", Tools.nowUTC());
         msg.addField("foo", "IWILLSURVIVE");
 
-        when(inputService.find(eq("someid"))).thenReturn(input);
-        when(inputService.getStaticFields(eq(input)))
-                .thenReturn(Lists.newArrayList(Maps.immutableEntry("foo", "bar")));
-
         final StaticFieldFilter filter = new StaticFieldFilter(inputService, new EventBus(), Executors.newSingleThreadScheduledExecutor());
         filter.filter(msg);
 

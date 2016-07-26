@@ -18,7 +18,6 @@ package org.graylog2.security;
 
 import com.google.common.collect.ImmutableMap;
 import org.graylog2.plugin.security.PasswordAlgorithm;
-import org.graylog2.security.PasswordAlgorithmFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +53,6 @@ public class PasswordAlgorithmFactoryTest {
     @Test
     public void testForPasswordShouldReturnFirstAlgorithm() throws Exception {
         when(passwordAlgorithm1.supports(anyString())).thenReturn(true);
-        when(passwordAlgorithm2.supports(anyString())).thenReturn(false);
 
         final PasswordAlgorithmFactory passwordAlgorithmFactory = new PasswordAlgorithmFactory(passwordAlgorithms, passwordAlgorithm2);
 

@@ -24,7 +24,6 @@ import org.graylog2.plugin.outputs.MessageOutputConfigurationException;
 import org.graylog2.plugin.streams.Output;
 import org.graylog2.plugin.streams.Stream;
 import org.graylog2.streams.OutputService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -56,12 +55,6 @@ public class OutputRegistryTest {
     private OutputService outputService;
     @Mock
     private org.graylog2.Configuration configuration;
-
-    @Before
-    public void setUp() throws Exception {
-        when(configuration.getOutputFaultCountThreshold()).thenReturn(FAULT_COUNT_THRESHOLD);
-        when(configuration.getOutputFaultPenaltySeconds()).thenReturn(FAULT_PENALTY_SECONDS);
-    }
 
     @Test
     public void testMessageOutputsIncludesDefault() {

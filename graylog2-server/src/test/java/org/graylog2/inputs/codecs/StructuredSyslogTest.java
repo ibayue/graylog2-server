@@ -36,7 +36,6 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -64,8 +63,6 @@ public class StructuredSyslogTest {
     @Before
     public void setUp() {
         when(metricRegistry.timer(any(String.class))).thenReturn(mockedTimer);
-        when(mockedTimer.time()).thenReturn(mock(Timer.Context.class));
-
         syslogCodec = new SyslogCodec(configuration, metricRegistry);
     }
 

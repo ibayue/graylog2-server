@@ -16,7 +16,6 @@
  */
 package org.graylog2.inputs.transports;
 
-import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import org.graylog2.plugin.inputs.MessageInput;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -44,7 +43,6 @@ import java.nio.charset.Charset;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -70,9 +68,6 @@ public class GELFHttpHandlerTest {
 
     @Before
     public void setUp() throws Exception {
-        Meter meter = mock(Meter.class);
-        when(metricRegistry.meter(anyString())).thenReturn(meter);
-
         ChannelBuffer channelBuffer = ChannelBuffers.copiedBuffer("{}", Charset.defaultCharset());
 
         when(headers.get(HttpHeaders.Names.CONNECTION)).thenReturn(HttpHeaders.Values.CLOSE);
